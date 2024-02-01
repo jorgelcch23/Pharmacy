@@ -9,7 +9,7 @@ class Pharmacy extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'phone', 'location'];
+    protected $fillable = ['name', 'address', 'phone', 'gps', 'location'];
 
     public function Turns(){
         return $this->hasMany(Turn::class);

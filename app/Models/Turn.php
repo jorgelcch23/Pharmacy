@@ -8,13 +8,13 @@ use Illuminate\Database\Eloquent\Model;
 class Turn extends Model
 {
     use HasFactory;
-    protected $fillable = ['date'];
+    protected $fillable = ['user_id','pharmacy_id','date'];
 
     public function user() {
-        return $this->belongTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function pharmacy(){
-        return $this->belongTo(Pharmacy::class);
+        return $this->belongsTo(Pharmacy::class);
     }
 }
