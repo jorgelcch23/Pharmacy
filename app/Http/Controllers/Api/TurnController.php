@@ -22,19 +22,24 @@ class TurnController extends Controller
             ->get();
         return response()->json($turns);
     }
+    
     public function indexPharmacy()
     {
         $now = Carbon::now();
         $startOfDay = $now->copy()->startOfDay()->addHours(8);
-        $endOfDayTomorrow = $now->copy()->addDay()->startOfDay()->addHours(8);
-        $result = Turn::with('pharmacy')->whereDate('date', '>=', $startOfDay->toDateString())
-        ->whereDate('date', '<', $endOfDayTomorrow->toDateString())->get() ->groupBy('date')->map
-        (function ($turns, $date) {
-            return [
-                'date' => $date,
-                'pharmacies' => $turns->pluck('pharmacy')->toArray(),
-            ];
-        })->values()->all();
+        $today = Carbon::today();
+        $yesterday = Carbon::yesterday();
+        $Variable = null;
+        if ($now<=$startOfDay) $Variable=$yesterday;
+        else $Variable=$today;
+        $result = Turn::with('pharmacy')
+            ->whereDate('date', '=', $Variable->toDateString())->get()
+            ->groupBy('date')->map(function ($turns, $date) {
+                return [
+                    'date' => $date,
+                    'pharmacies' => $turns->pluck('pharmacy')->toArray(),
+                ];
+            }) ->values()->all();
         return response()->json($result);
     }
     /**
