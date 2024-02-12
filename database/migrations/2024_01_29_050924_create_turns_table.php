@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('turns', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constraint('users');
-            $table->foreignId('pharmacy_id')->constraint('pharmacies');
+            $table->foreignId('pharmacy_id')->constrained();
+            //users
+            $table->foreignId('user_id')->constrained(); 
             $table->date('date'); 
             $table->timestamps();
         });
