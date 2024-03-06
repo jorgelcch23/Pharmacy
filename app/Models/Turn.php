@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Turn extends Model
 {
     use HasFactory;
+    
     protected $fillable = ['user_id','pharmacy_id','date'];
 
     public function user() {
